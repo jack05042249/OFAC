@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="force.apex" timestamp="2025-07-10T05:20:38.000Z" hostname="https://d300000000hkxea2--fullcopy.sandbox.my.salesforce.com" tests="1" failures="1"  errors="0"  time="20.91">
+        <properties>
+            <property name="outcome" value="Failed"/>
+            <property name="testsRan" value="1"/>
+            <property name="passing" value="0"/>
+            <property name="failing" value="1"/>
+            <property name="skipped" value="0"/>
+            <property name="passRate" value="0%"/>
+            <property name="failRate" value="100%"/>
+            <property name="testStartTime" value="Thu Jul 10 2025 12:20:38 PM"/>
+            <property name="testSetupTimeInMs" value="0"/>
+            <property name="testExecutionTime" value="20.91 s"/>
+            <property name="testTotalTime" value="20.91 s"/>
+            <property name="commandTime" value="1.06 s"/>
+            <property name="hostname" value="https://d300000000hkxea2--fullcopy.sandbox.my.salesforce.com"/>
+            <property name="orgId" value="00DEk00000NsYp4MAF"/>
+            <property name="username" value="benjamin.mabini@intrado.com.fullcopy"/>
+            <property name="testRunId" value="707Ek00001ncXuz"/>
+            <property name="userId" value="005Ek00000QAEkHIAX"/>
+        </properties>
+        <testcase name="testGettersAndSetters" classname="MassReassignOpportunitiesControllerTest" time="20.91">
+            <failure message="System.AssertException: Assertion Failed"><![CDATA[Class.MassReassignOpportunitiesControllerTest.testGettersAndSetters: line 45, column 1]]></failure>
+        </testcase>
+    </testsuite>
+</testsuites>

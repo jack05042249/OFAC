@@ -24,66 +24,77 @@ public class OFACUtilityClass {
     }
     
     public static string getAccessToken(MoveIT_Integration__c mi) {
-        String accessToken = '';
         Http http = new Http();
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(mi.LoginURL__c);
+        
+        // Use Named Credential endpoint with relative path if needed
+        req.setEndpoint('callout:MoveIT_NC_Auth'); // Named Credential URL
+        
         req.setMethod('POST');
+        req.setHeader('accept', 'application/json');
         req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        String payload = 'grant_type=password&username=' + mi.username__c + '&password=' + mi.password__c;
+        
+        // Build your payload securely
+        String payload = 'grant_type=password' +
+            '&username=' + EncodingUtil.urlEncode(mi.username__c, 'UTF-8') +
+            '&password=' + EncodingUtil.urlEncode(mi.password__c, 'UTF-8');
         req.setBody(payload);
+        
         HttpResponse response = http.send(req);
-        System.debug(response.getBody());
+        System.debug('Response Body: ' + response.getBody());
+        
         if (response.getStatusCode() == 200 || response.getStatusCode() == 201) {
-            
-            responseClass rp = (responseClass)System.JSON.deserialize(response.getBody(), responseClass.class);
-            accessToken = rp.access_token;
+            responseClass rp = (responseClass) System.JSON.deserialize(response.getBody(), responseClass.class);
+            return rp.access_token;
+        } else {
+            // Handle errors here appropriately
+            System.debug('Error: Status ' + response.getStatusCode());
+            return null;
         }
-        return accessToken;
     }
     
     public static void uploadFile (MoveIT_Integration__c mi, String fileName, String contentStr) {
         
-            String accessToken = getAccessToken(mi);
-            System.debug('accessToken: ' + accessToken);
+        String accessToken = getAccessToken(mi);
+        System.debug('accessToken: ' + accessToken);
         
-            String formBoundary = '----sfdc-multi-form',
+        String formBoundary = '----sfdc-multi-form',
         
-                headerForm = '--'+formBoundary+'\r\nContent-Disposition: form-data; name="{0}";\r\n\n',
-                headerFile = '--'+formBoundary+'\r\nContent-Disposition: form-data; name="{0}"; filename="{1}";\r\nContent-Type: {2}\r\n\n';
+        headerForm = '--'+formBoundary+'\r\nContent-Disposition: form-data; name="{0}";\r\n\n',
+        headerFile = '--'+formBoundary+'\r\nContent-Disposition: form-data; name="{0}"; filename="{1}";\r\nContent-Type: {2}\r\n\n';
         
-            HttpRequest req = new HttpRequest();
-            req.setMethod('POST');
-            req.setEndpoint(mi.FolderURL__c + mi.folderId__c + '/files');
-            // req.setMethod('GET');
-            // req.setEndpoint(mi.FolderURL__c);
-            req.setHeader('Authorization', 'Bearer ' + accessToken);
+        HttpRequest req = new HttpRequest();
+        // req.setMethod('POST');
+        // req.setEndpoint(mi.FolderURL__c + mi.folderId__c + '/files');
+        req.setMethod('GET');
+        req.setEndpoint(mi.FolderURL__c);
+        req.setHeader('Authorization', 'Bearer ' + accessToken);
         
-            String boundary = '----------------------------' + String.valueOf(System.currentTimeMillis());
+        // String boundary = '----------------------------' + String.valueOf(System.currentTimeMillis());
         
-            String header = '--' + boundary + '\r\nContent-Disposition: form-data; name="file"; filename="' + fileName+'.csv' + '"\r\nContent-Type: application/octet-stream\r\n\r\n';
+        // String header = '--' + boundary + '\r\nContent-Disposition: form-data; name="file"; filename="' + fileName+'.csv' + '"\r\nContent-Type: application/octet-stream\r\n\r\n';
         
-            String footer = '\r\n--' + boundary + '--\r\n';
+        // String footer = '\r\n--' + boundary + '--\r\n';
         
-            String body = header + contentStr + footer;
+        // String body = header + contentStr + footer;
         
-            req.setHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+        // req.setHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
         
-            req.setHeader('Content-Length', String.valueOf(body.length()));
+        // req.setHeader('Content-Length', String.valueOf(body.length()));
         
-            req.setBody(body);
+        // req.setBody(body);
         
-            Http http = new Http();
+        Http http = new Http();
         
-            HttpResponse res = http.send(req);
-            System.debug('res ' + res.getBody());
-            List<OFAC_Report_Log__c> orl = new List<OFAC_Report_Log__c>();
-            if (res.getStatusCode() == 200 || res.getStatusCode() == 201) {
-                    orl.add(new OFAC_Report_Log__c(File_Name__c = fileName, Status__c = 'Successful', Status_Code__c = String.valueOf(res.getStatusCode())));
-            } else {
-                    orl.add(new OFAC_Report_Log__c(File_Name__c = fileName, Status__c = 'Failed', Error_Message__c = res.getBody(), Status_Code__c = String.valueOf(res.getStatusCode())));
-            }
-            insert orl;
+        HttpResponse res = http.send(req);
+        System.debug('res ' + res.getBody());
+        List<OFAC_Report_Log__c> orl = new List<OFAC_Report_Log__c>();
+        if (res.getStatusCode() == 200 || res.getStatusCode() == 201) {
+            orl.add(new OFAC_Report_Log__c(File_Name__c = fileName, Status__c = 'Successful', Status_Code__c = String.valueOf(res.getStatusCode())));
+        } else {
+            orl.add(new OFAC_Report_Log__c(File_Name__c = fileName, Status__c = 'Failed', Error_Message__c = res.getBody(), Status_Code__c = String.valueOf(res.getStatusCode())));
+        }
+        insert orl;
         
     }
     
