@@ -1,0 +1,38 @@
+# SFDX local project config and temp files
+.sfdx/
+sf/
+.localdevserver/
+.env
+.env.*
+
+# VS Code workspace settings
+.vscode/
+*.code-workspace
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Node dependencies (if your project has scripts)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Coverage reports
+coverage/
+test-results/
+
+# Unpackaged metadata cache (if using mdapi:retrieve)
+mdapipkg/
+
+# Scratch org definition files with personal info (optional)
+config/*.json
+
+# Deploy-generated zip files
+*.zip
+
+# Salesforce plugin-specific caches
+.sfdx/tools/
