@@ -25,11 +25,11 @@ private class OFACReportsTest {
         // Insert org-level default MoveIT_Integration__c
         insert new MoveIT_Integration__c(
             SetupOwnerId = UserInfo.getOrganizationId(), // Ensure this is org-wide
-            LoginURL__c = 'https://dataexchange.intrado.com/api/v1/token',
-            FolderURL__c = 'https://dataexchange.intrado.com/api/v1/folders/',
+            LoginURL__c = 'https://c3.moveitcloud.com/api/v1/token',
+            FolderURL__c = 'https://c3.moveitcloud.com/api/v1/folders/',
             folderId__c = '987457846',
-            username__c = 'apiuser_prod',
-            password__c = 'Z76QJ7aBLWUbsCW!',
+            username__c = 'ls_salesforce_prod',
+            password__c = 'aI!9f4Lk',
             OFAC_Account_Developer_Name__c = 'OFAC_report_Account_No_Duplicates_3Nm',
             OFAC_Contact_Developer_Name__c = 'OFAC_report_Contact_No_Duplicates_0p9',
             Preferred_Account_File_Name__c = 'SF_Business_WSFS_SFS_EBS',

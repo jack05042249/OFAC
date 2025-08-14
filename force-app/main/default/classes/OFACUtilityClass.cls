@@ -28,8 +28,8 @@ public class OFACUtilityClass {
         HttpRequest req = new HttpRequest();
         
         // Use Named Credential endpoint with relative path if needed
-        req.setEndpoint('callout:MoveIT_NC_Auth'); // Named Credential URL
-        
+        req.setEndpoint(mi.LoginURL__c); // Named Credential URL
+
         req.setMethod('POST');
         req.setHeader('accept', 'application/json');
         req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -64,25 +64,25 @@ public class OFACUtilityClass {
         headerFile = '--'+formBoundary+'\r\nContent-Disposition: form-data; name="{0}"; filename="{1}";\r\nContent-Type: {2}\r\n\n';
         
         HttpRequest req = new HttpRequest();
-        // req.setMethod('POST');
-        // req.setEndpoint(mi.FolderURL__c + mi.folderId__c + '/files');
-        req.setMethod('GET');
-        req.setEndpoint(mi.FolderURL__c);
-        req.setHeader('Authorization', 'Bearer ' + accessToken);
+        req.setMethod('POST');
+        req.setEndpoint(mi.FolderURL__c + mi.folderId__c + '/files');
+        // req.setMethod('GET');
+        // req.setEndpoint(mi.FolderURL__c);
+        // req.setHeader('Authorization', 'Bearer ' + accessToken);
         
-        // String boundary = '----------------------------' + String.valueOf(System.currentTimeMillis());
+        String boundary = '----------------------------' + String.valueOf(System.currentTimeMillis());
         
-        // String header = '--' + boundary + '\r\nContent-Disposition: form-data; name="file"; filename="' + fileName+'.csv' + '"\r\nContent-Type: application/octet-stream\r\n\r\n';
+        String header = '--' + boundary + '\r\nContent-Disposition: form-data; name="file"; filename="' + fileName+'.csv' + '"\r\nContent-Type: application/octet-stream\r\n\r\n';
         
-        // String footer = '\r\n--' + boundary + '--\r\n';
+        String footer = '\r\n--' + boundary + '--\r\n';
         
-        // String body = header + contentStr + footer;
+        String body = header + contentStr + footer;
         
-        // req.setHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+        req.setHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
         
-        // req.setHeader('Content-Length', String.valueOf(body.length()));
+        req.setHeader('Content-Length', String.valueOf(body.length()));
         
-        // req.setBody(body);
+        req.setBody(body);
         
         Http http = new Http();
         
