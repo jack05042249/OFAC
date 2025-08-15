@@ -54,6 +54,7 @@ private class OFACReportsSchedulableTest {
         String testObjName = 'Account';
         OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
         
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         Test.startTest();
         schedulable.execute(null);
         Test.stopTest();
@@ -69,6 +70,7 @@ private class OFACReportsSchedulableTest {
         String testObjName = 'Contact';
         OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
         
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         Test.startTest();
         schedulable.execute(null);
         Test.stopTest();
@@ -83,6 +85,7 @@ private class OFACReportsSchedulableTest {
         String testObjName = 'Account';
         OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
         
+        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         Test.startTest();
         schedulable.execute(null);
         Test.stopTest();
