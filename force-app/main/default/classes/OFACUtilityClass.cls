@@ -68,7 +68,8 @@ public class OFACUtilityClass {
         req.setEndpoint(mi.FolderURL__c + mi.folderId__c + '/files');
         // req.setMethod('GET');
         // req.setEndpoint(mi.FolderURL__c);
-        // req.setHeader('Authorization', 'Bearer ' + accessToken);
+        
+        req.setHeader('Authorization', 'Bearer ' + accessToken);
         
         String boundary = '----------------------------' + String.valueOf(System.currentTimeMillis());
         
