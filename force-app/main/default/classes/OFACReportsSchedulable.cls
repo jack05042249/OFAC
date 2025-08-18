@@ -2,8 +2,8 @@ public class OFACReportsSchedulable implements Schedulable {
     
     public String objName;
     
-    public OFACReportsSchedulable(String objNameprm) {
-        objName = objNameprm;
+    public OFACReportsSchedulable() {
+        this.objName = 'Account';
     }
     
     public void execute(SchedulableContext SC) {
