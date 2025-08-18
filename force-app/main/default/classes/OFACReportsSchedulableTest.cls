@@ -41,18 +41,16 @@ private class OFACReportsSchedulableTest {
     
     @isTest
     static void testConstructor() {
-        // Test the constructor
-        String testObjName = 'Account';
-        OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
+        // Test the default constructor
+        OFACReportsSchedulable schedulable = new OFACReportsSchedulable();
         
-        System.assertEquals(testObjName, schedulable.objName, 'Object name should be set correctly in constructor');
+        System.assertEquals('Account', schedulable.objName, 'Object name should default to Account in constructor');
     }
     
     @isTest
     static void testSchedulableExecuteMethod() {
         // Test the schedulable execute method
-        String testObjName = 'Account';
-        OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
+        OFACReportsSchedulable schedulable = new OFACReportsSchedulable();
         
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         Test.startTest();
@@ -65,25 +63,9 @@ private class OFACReportsSchedulableTest {
     }
     
     @isTest
-    static void testSchedulableExecuteMethodWithContact() {
-        // Test the schedulable execute method with Contact object
-        String testObjName = 'Contact';
-        OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
-        
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
-        Test.startTest();
-        schedulable.execute(null);
-        Test.stopTest();
-        
-        // Verify that the execute method completed without errors
-        System.assert(true, 'Schedulable execute method should complete successfully with Contact object');
-    }
-    
-    @isTest
     static void testSchedulableExecuteMethodWithNullContext() {
         // Test the schedulable execute method with null context
-        String testObjName = 'Account';
-        OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
+        OFACReportsSchedulable schedulable = new OFACReportsSchedulable();
         
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         Test.startTest();
@@ -175,8 +157,7 @@ private class OFACReportsSchedulableTest {
         // Test the complete end-to-end flow
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         
-        String testObjName = 'Account';
-        OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
+        OFACReportsSchedulable schedulable = new OFACReportsSchedulable();
         
         Test.startTest();
         // Execute the schedulable which enqueues the queueable
@@ -199,8 +180,7 @@ private class OFACReportsSchedulableTest {
         // Test integration between schedulable and queueable
         Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
         
-        String testObjName = 'Account';
-        OFACReportsSchedulable schedulable = new OFACReportsSchedulable(testObjName);
+        OFACReportsSchedulable schedulable = new OFACReportsSchedulable();
         
         Test.startTest();
         // Execute the schedulable
